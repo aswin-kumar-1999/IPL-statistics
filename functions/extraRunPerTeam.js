@@ -1,47 +1,18 @@
-const parse = require('csv-parse');
-const fs = require('fs');
+const dataSheet=require('./extraction');
 
-const IPLdeliveries = [];
-const URL='/../src/data/deliveries.csv';
-fs.createReadStream(__dirname + URL).pipe(
-    parse({
-        delimiter: ',',
-        columns: true,
-        trim: true
-    })
-)
-    .on('data', function (record) {
-        IPLdeliveries.push(record)
-    })
-    .on('end', function () {
-       matches();
-    })
+const path='/../src/data/deliveries.csv';
+dataSheet.fetching(path,matches);
 
-
-
-const IPLmatches = [];
-function matches(){
-    fs.createReadStream(__dirname + '/../src/data/matches.csv').pipe(
-        parse({
-            delimiter: ',',
-            columns: true,
-            trim: true
-        })
-    )
-        .on('data', function (record) {
-            IPLmatches.push(record)
-        })
-        .on('end', function () {
-            extraRunPerTeam(IPLmatches,IPLdeliveries);
-        })
-    
-    
+function matches(IPLdeliveries){
+    const path='/../src/data/matches.csv'
+        dataSheet.fetching(path,extraRunPerTeam,IPLdeliveries);
 }
 
 function extraRunPerTeam(IPLmatches,IPLdeliveries) {
     const extraScores={};
     let min=Infinity;
     let max=-Infinity; 
+    // console.log(IPLmatches);
     IPLmatches.forEach(IPL2016);
     IPLdeliveries.forEach(extraRuns);
     
@@ -62,11 +33,7 @@ function extraRunPerTeam(IPLmatches,IPLdeliveries) {
             extraScores[records.bowling_team]+=+records.extra_runs;
         }
     }
-    tranferToJSON(JSON.stringify(extraScores));
+    const outputPath='../src/public/output/extraRunPerTeam.json';
+    dataSheet.tranferToJSON(JSON.stringify(extraScores),outputPath);
 }
 
-function tranferToJSON(data) {
-    fs.writeFile('../src/public/output/extraRunPerTeam.json', data, err => {
-        if (err) throw err;
-    })
-}

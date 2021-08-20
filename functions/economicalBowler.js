@@ -1,44 +1,15 @@
 // Top 10 economical bowlers in the year 2015
-const parse = require('csv-parse');
-const fs = require('fs');
+const dataSheet=require('./extraction');
 const _=require('underscore');
 
-const IPLdeliveries = [];
-fs.createReadStream(__dirname + '/../src/data/deliveries.csv').pipe(
-    parse({
-        delimiter: ',',
-        columns: true,
-        trim: true
-    })
-)
-    .on('data', function (record) {
-        IPLdeliveries.push(record)
-    })
-    .on('end', function () {
-        //console.log(IPLdeliveries);
-        matches();
-    })
-   
+const path='/../src/data/deliveries.csv';
+dataSheet.fetching(path,matches);
 
-
-const IPLmatches = [];
-
-function matches(){
-    fs.createReadStream(__dirname + '/../src/data/matches.csv').pipe(
-        parse({
-            delimiter: ',',
-            columns: true,
-            trim: true
-        })
-    )
-        .on('data', function (record) {
-            IPLmatches.push(record)
-        })
-        .on('end', function () {
-            economicalBowler(IPLmatches, IPLdeliveries);
-        })
-    
+function matches(IPLdeliveries){
+    const path='/../src/data/matches.csv'
+        dataSheet.fetching(path,economicalBowler,IPLdeliveries);
 }
+
 
 function economicalBowler(IPLmatches, IPLdeliveries) {
    let bowlersScore=[];
@@ -77,7 +48,6 @@ function economicalBowler(IPLmatches, IPLdeliveries) {
             }
         }
     }
-   //console.log(bowlerOver);
     let final=[];
     for(let item in bowlersScore){
         const avgScore=bowlersScore[item]/bowlerOver[item].over;
@@ -88,13 +58,6 @@ function economicalBowler(IPLmatches, IPLdeliveries) {
     for(let i=0;i<10;i++){
         top10Bowler.push(final[i]);
     }
-
-
-    tranferToJSON(JSON.stringify(top10Bowler));
-}
-
-function tranferToJSON(data) {
-    fs.writeFile('../src/public/output/economicalBowler.json', data, err => {
-        if (err) throw err;
-    })
+    const outputPath='../src/public/output/economicalBowler.json'
+    dataSheet.tranferToJSON(JSON.stringify(top10Bowler),outputPath);
 }

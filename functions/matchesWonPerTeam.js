@@ -1,27 +1,11 @@
 // Number of matches won per team per year in IPL.
-const parse = require('csv-parse');
-const fs = require('fs');
+const dataSheet=require('./extraction');
 
-const IPLrecords = [];
-
-fs.createReadStream(__dirname + '/../src/data/matches.csv').pipe(
-    parse({
-        delimiter: ',',
-        columns: true,
-        trim: true
-    })
-)
-    .on('data', function (record) {
-        IPLrecords.push(record)
-    })
-    .on('end', function () {
-
-        matchesWonPerYear(IPLrecords);
-    })
+const path='/../src/data/matches.csv';
+dataSheet.fetching(path,matchesWonPerYear);
 
 function matchesWonPerYear(record){
     const matchWinners={};
-   // console.log(record[0]);
     record.forEach(element => {
        matchWinners[element.season]={}; 
     });   
@@ -29,11 +13,6 @@ function matchesWonPerYear(record){
         matchWinners[element.season][element.winner]= matchWinners[element.season][element.winner]?? 1;
         matchWinners[element.season][element.winner]+=1;
      });
-    tranferToJSON(JSON.stringify(matchWinners));
-}
-
-function tranferToJSON(data) {
-    fs.writeFile('../src/public/output/matchesWonPerTeam.json', data, err => {
-        if (err) throw err;
-    })
+     const outputPath='../src/public/output/matchesWonPerTeam.json';
+    dataSheet.tranferToJSON(JSON.stringify(matchWinners),outputPath);
 }

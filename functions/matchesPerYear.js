@@ -1,37 +1,16 @@
-const parse = require('csv-parse');
-const fs = require('fs');
+const dataSheet=require('./extraction');
 
-const IPLrecords = [];
-
-fs.createReadStream(__dirname + '/../src/data/matches.csv').pipe(
-    parse({
-        delimiter: ',',
-        columns: true,
-        trim: true
-    })
-)
-    .on('data', function (record) {
-        IPLrecords.push(record)
-    })
-    .on('end', function () {
-       
-        matchesPerYear(IPLrecords);
-    })
-
+const path='/../src/data/matches.csv';
+dataSheet.fetching(path,matchesPerYear);
 
 function matchesPerYear(IPLrecords) {
-    const numberOfMatchesPerYear = {};
 
+    const numberOfMatchesPerYear = {};
     IPLrecords.forEach(element => {
         numberOfMatchesPerYear[element.season] = numberOfMatchesPerYear[element.season] ?? 1;
         numberOfMatchesPerYear[element.season] += 1;
     });
-    // console.info(JSON.stringify(numberOfMatchesPerYear));
-    tranferToJSON(JSON.stringify(numberOfMatchesPerYear));
+    const outputPath='../src/public/output/matchesPerYear.json';
+    dataSheet.tranferToJSON(JSON.stringify(numberOfMatchesPerYear),outputPath);
 }
 
-function tranferToJSON(data) {
-    fs.writeFile('../src/public/output/matchesPerYear.json', data, err => {
-        if (err) throw err;
-    })
-}
