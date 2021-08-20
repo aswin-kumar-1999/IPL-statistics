@@ -1,6 +1,5 @@
 // Top 10 economical bowlers in the year 2015
 const dataSheet=require('./extraction');
-const _=require('underscore');
 
 const path='/../src/data/deliveries.csv';
 dataSheet.fetching(path,matches);
@@ -53,7 +52,8 @@ function economicalBowler(IPLmatches, IPLdeliveries) {
         const avgScore=bowlersScore[item]/bowlerOver[item].over;
         final.push({bowler:item, avgRun:avgScore, over:bowlerOver[item].over});
     }
-    final=_.sortBy(final,'avgRun')
+    // final=_.sortBy(final,'avgRun')
+    final.sort((a,b)=>{return a.avgRun-b.avgRun});
     const top10Bowler=[];
     for(let i=0;i<10;i++){
         top10Bowler.push(final[i]);
