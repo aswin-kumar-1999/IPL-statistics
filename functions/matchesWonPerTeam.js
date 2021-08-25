@@ -1,9 +1,21 @@
-// Number of matches won per team per year in IPL.
+/**
+ * Fetching the data from matches.csv files
+ * @requires module:'functions/extraction.js'
+ * @property {String} path - path of file from which data has to be fetched  
+ * @member dataSheet - Contains fetching and transferToJSON functions
+ */
 const dataSheet=require('./extraction');
 
 const path='/../src/data/matches.csv';
 dataSheet.fetching(path,matchesWonPerYear);
 
+
+/**
+ * find the number matches won per team per year
+ * @function matchesWonPerYear 
+ * @param {Array} record - All matches details of the IPL
+ * @property {Object} matchWinners - Details of season and number of matches played per season  
+*/
 function matchesWonPerYear(record){
     const matchWinners={};
     record.forEach(element => {

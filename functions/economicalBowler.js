@@ -1,4 +1,12 @@
 // Top 10 economical bowlers in the year 2015
+
+/**
+ * Fetching the data from matches.csv and deliveries.csv files
+ * @requires  module:'functions/extraction.js'
+ * @property {String} path - path of file from which data has to be fetched 
+ * @member dataSheet
+ */
+
 const dataSheet=require('./extraction');
 
 const path='/../src/data/deliveries.csv';
@@ -10,6 +18,16 @@ function matches(IPLdeliveries){
 }
 
 
+/**
+ * Finding the economical bowler for each season
+ * @function economicalBowler
+ * @param {Array} IPLmatches  - Records of matches per season
+ * @param {Array} IPLdeliveries - Records of all the ball per match
+ * @property {Array} bowlersScore - bowler with there score
+ * @property {Array} bowlerOver - number of over bowled per bowler
+ * @property {number} min - Staring match ID of that season
+ * @property {number} max - Ending match ID of that season 
+ */
 function economicalBowler(IPLmatches, IPLdeliveries) {
    let bowlersScore=[];
    let bowlerOver=[];
@@ -19,6 +37,12 @@ function economicalBowler(IPLmatches, IPLdeliveries) {
     IPLmatches.forEach(IPL2015);
     IPLdeliveries.forEach(bowlerNames);
     IPLdeliveries.forEach(eco_Bowler);
+
+   /**
+    * Find the starting and ending match ID
+    * @function IPL2015
+    * @param {Object} records - details of each match 
+    */
 
     function IPL2015(records) {
         if (records.season == 2015) {
@@ -31,6 +55,12 @@ function economicalBowler(IPLmatches, IPLdeliveries) {
         }
     }
 
+    /**
+     * Finding bowler bowled per season
+     * @function bowlerNames
+     * @param {Object} record - details of each ball in IPL 
+     */
+
     function bowlerNames(record) {
         if(record.match_id >= min && record.match_id<=max){
             bowlersScore[record.bowler]=0;
@@ -38,6 +68,12 @@ function economicalBowler(IPLmatches, IPLdeliveries) {
 
          }
     }
+
+    /**
+     * finding run given by bowler per season and number of over bowled
+     * @function eco_Bowler 
+     * @param {Object} record - details of each ball in IPL 
+     */
     function eco_Bowler(record) {
         if(record.match_id >= min && record.match_id<=max){  
             bowlersScore[record.bowler]+=(+record.total_runs);
