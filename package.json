@@ -4,7 +4,7 @@
   "description": "\"Extracting details from IPL files\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-documentation": "npx jsdoc -d public -r ./functions/"
   },
   "repository": {
     "type": "git",
