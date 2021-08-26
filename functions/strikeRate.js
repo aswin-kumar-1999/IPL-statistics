@@ -86,12 +86,13 @@ function strikeRate(IPLmatches, IPLdeliveries) {
         return calStrike;
     }
     const finalStrike = [];
+   
     for (let element in calStrike) {
         for (let strike in calStrike[element]) {
             const run = calStrike[element][strike].run;
             const over = calStrike[element][strike].over;
             const avg = (run / over);
-            finalStrike.push({ season: element, player: calStrike[element][strike], avg_score: avg })
+            finalStrike.push({ season: element, player: strike, avg_score: avg })
         }
     }
 
