@@ -6,9 +6,9 @@
  * @member dataSheet
  */
 
-const dataSheet=require('./extraction');
-const path='/../src/data/deliveries.csv';
-dataSheet.fetching(path,dismissedPlayer);
+const dataSheet = require('./extraction');
+const path = '/../src/data/deliveries.csv';
+dataSheet.fetching(path, dismissedPlayer);
 
 /**
  * Finding table top dismissed player 
@@ -18,30 +18,40 @@ dataSheet.fetching(path,dismissedPlayer);
  * @property {Array} dismissPlayer - organising the dismiss into array 
  * @property {String} outputPath - path to dump the output 
  */
-function dismissedPlayer(IPLrecords){
-    const dismiss={};
-    const dismissPlayer=[];
-   IPLrecords.reduce(countDismiss);
-
-   /**
-    * function to count the dismissed per player
-    * @function countDismiss 
-    * @param {object} tot - accummulation of dismissed player 
-    * @param {object} records - records of each ball
-    * @returns {object} - number of dimission per player
-    */
-    function countDismiss(tot,records){
-        if(records.player_dismissed != ''){
-            dismiss[records.player_dismissed]=dismiss[records.player_dismissed]??0;
-            dismiss[records.player_dismissed]+=+1;
+function dismissedPlayer(IPLrecords) {
+    const dismiss = {};
+    const dismissPlayer = [];
+    IPLrecords.forEach(records => {
+        if (records.player_dismissed != '') {
+            dismiss[records.player_dismissed] = { bowl: '', count: 0 }
+        }
+    })
+    IPLrecords.reduce(countDismiss);
+    /**
+     * function to count the dismissed per player
+     * @function countDismiss 
+     * @param {object} tot - accummulation of dismissed player 
+     * @param {object} records - records of each ball
+     * @returns {object} - number of dimission per player
+     */
+    function countDismiss(tot, records) {
+        if (records.player_dismissed != '') {
+            if (dismiss[records.player_dismissed].bowl == records.bowler) {
+                const count = dismiss[records.player_dismissed].count + 1
+                dismiss[records.player_dismissed] = { bowl: records.bowler, count: count }
+            }
+            else {
+                dismiss[records.player_dismissed] = { bowl: records.bowler, count: 1 }
+            }
         }
         return dismiss;
     }
-    for(let element in dismiss){
-        dismissPlayer.push({Player:element,count:dismiss[element]});
+    // console.log(dismiss);
+    for (let element in dismiss) {
+        dismissPlayer.push({ batsman: element, bowler: dismiss[element].bowl, count: dismiss[element].count });
     }
-    dismissPlayer.sort((a,b)=>{return b.count - a.count})
-
+    dismissPlayer.sort((a, b) => { return b.count - a.count })
+    // console.log(dismissPlayer);
     const outputPath='../src/public/output/dismissedPlayer.json';
-    dataSheet.tranferToJSON(JSON.stringify(dismissPlayer.shift()),outputPath);
+    dataSheet.tranferToJSON(JSON.stringify(dismissPlayer),outputPath);
 }

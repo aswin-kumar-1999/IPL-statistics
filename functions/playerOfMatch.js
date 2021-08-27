@@ -20,7 +20,8 @@ dataSheet.fetching(path, playerOfMatch);
 
 function playerOfMatch(IPLmatch) {
     const MAN_OF_THE_MATCH = {};
-    const manOfMatch = [];
+    const manOfMatch = {};
+    IPLmatch.forEach(season);
     IPLmatch.reduce(manOfTheMatch);
 
     /**
@@ -30,18 +31,30 @@ function playerOfMatch(IPLmatch) {
      * @param {Object} match - contains details of each the match
      */
 
-    function manOfTheMatch(tot, match) {
+    function season(element){
+        MAN_OF_THE_MATCH[element.season]={};
+        manOfMatch[element.season]=[];
 
-        MAN_OF_THE_MATCH[match.player_of_match] = MAN_OF_THE_MATCH[match.player_of_match] ?? 0;
-        MAN_OF_THE_MATCH[match.player_of_match] += 1
+    }
+    function manOfTheMatch(tot, match) {
+        
+        MAN_OF_THE_MATCH[match.season][match.player_of_match]=MAN_OF_THE_MATCH[match.season][match.player_of_match] ?? 0;
+        MAN_OF_THE_MATCH[match.season][match.player_of_match] += 1
         return MAN_OF_THE_MATCH;
     }
-  
-    for (let i in MAN_OF_THE_MATCH) {
-        manOfMatch.push({ name: i, count: MAN_OF_THE_MATCH[i] });
+//    console.log(MAN_OF_THE_MATCH);
+    for (let season in MAN_OF_THE_MATCH) {
+        for(let player in MAN_OF_THE_MATCH[season])
+        manOfMatch[season].push({name: player , count: MAN_OF_THE_MATCH[season][player]});    
     }
-    manOfMatch.sort((a, b) => { return b.count - a.count });
-
+    const manOfMatchPerSeason=[];
+    for(let season in manOfMatch){
+        manOfMatch[season].sort((a,b)=> b.count - a.count)
+        const manofSeason= manOfMatch[season].shift();
+         manOfMatchPerSeason.push({season:season,manOfMatch:manofSeason.name})
+    }
+   
+     console.log(manOfMatchPerSeason);
     const outputPath='../src/public/output/playerOfMatch.json';
-    dataSheet.tranferToJSON(JSON.stringify(manOfMatch.shift()),outputPath);
+    dataSheet.tranferToJSON(JSON.stringify(manOfMatchPerSeason),outputPath);
 }

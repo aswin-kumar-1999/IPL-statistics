@@ -92,7 +92,7 @@ function strikeRate(IPLmatches, IPLdeliveries) {
             const run = calStrike[element][strike].run;
             const over = calStrike[element][strike].over;
             const avg = (run / over);
-            finalStrike.push({ season: element, player: strike, avg_score: avg })
+            finalStrike.push({ season: element, player: strike, avg_score: avg.toPrecision(2) })
         }
     }
 
