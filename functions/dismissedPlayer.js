@@ -7,16 +7,17 @@
  */
 
 const dataSheet = require('./extraction');
-function numberOfPlayerDismissed(IPLrecords){
+function numberOfPlayerDismissed(IPLrecords) {
     const dismiss = {};
     const dismissPlayer = [];
     IPLrecords.forEach(records => {
         if (records.player_dismissed != '') {
-            dismiss[records.player_dismissed] = { bowl: '', count: 0 }
+            dismiss[records.player_dismissed] = {}
         }
     })
-    // console.log(dismiss);
+
     IPLrecords.reduce(countDismiss);
+    console.log(dismiss['MS Dhoni']);
     /**
      * function to count the dismissed per player
      * @function countDismiss 
@@ -26,21 +27,19 @@ function numberOfPlayerDismissed(IPLrecords){
      */
     function countDismiss(tot, records) {
         if (records.player_dismissed != '') {
-            if(dismiss[records.player_dismissed].bowl == ''){
-                dismiss[records.player_dismissed] = { bowl: records.bowler, count: 1 }
-            }
-            else if (dismiss[records.player_dismissed].bowl == records.bowler) {
-                const count = dismiss[records.player_dismissed].count + 1
-                dismiss[records.player_dismissed].count = count;
-            }
+            dismiss[records.player_dismissed][records.bowler] = dismiss[records.player_dismissed][records.bowler] ?? 0;
+            dismiss[records.player_dismissed][records.bowler] += 1;
         }
         return dismiss;
     }
 
 
     for (let element in dismiss) {
-        dismissPlayer.push({ batsman: element, bowler: dismiss[element].bowl, count: dismiss[element].count });
+        for (let dismissingBowler in dismiss[element]) {
+            dismissPlayer.push({ batsman: element, bowler: dismissingBowler, count: dismiss[element][dismissingBowler] });
+        }
     }
+   
     dismissPlayer.sort((a, b) => { return b.count - a.count });
     const cnt = dismissPlayer.reduce(function (a, b) { return Math.max(a, b.count); }, 0);
     const dataChart=dismissPlayer.filter(elem => elem.count == cnt);
@@ -58,4 +57,4 @@ function numberOfPlayerDismissed(IPLrecords){
  * @property {String} outputPath - path to dump the output 
  */
 
-module.exports=numberOfPlayerDismissed;
+module.exports = numberOfPlayerDismissed;
