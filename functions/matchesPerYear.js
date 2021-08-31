@@ -4,25 +4,29 @@
  * @property {String} path - path of file from which data has to be fetched  
  * @member dataSheet
  */
+const path=require('path');
 const dataSheet = require('./extraction');
+
+/**
+ * find the matches played per year
+ * @function matchesPerYear 
+ * @param {Array} IPLrecords - All matches details of the IPL
+ * @property {Object} numberOfMatchesPerYear - Details of year and number of matches played
+ * @property {String} outputPath - Path to dump the output 
+*/
+
+
 function numberOfMatchesPerYear(IPLrecords){
     const numberOfMatchesPerYear = {};
     IPLrecords.forEach(element => {
         numberOfMatchesPerYear[element.season] = numberOfMatchesPerYear[element.season] ?? 1;
         numberOfMatchesPerYear[element.season] += 1;
     });
-    const outputPath = '/media/aswin/Work Drive/JavaScript/IPL_Drill/src/public/output/matchesPerYear.json';
+    const outputPath = path.resolve('./src/public/output/matchesPerYear.json');
     dataSheet.tranferToJSON(JSON.stringify(numberOfMatchesPerYear), outputPath);
 }
 
 
-// /**
-//  * find the matches played per year
-//  * @function matchesPerYear 
-//  * @param {Array} IPLrecords - All matches details of the IPL
-//  * @property {Object} numberOfMatchesPerYear - Details of year and number of matches played
-//  * @property {String} outputPath - Path to dump the output 
-// */
 
 
 module.exports=numberOfMatchesPerYear;

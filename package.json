@@ -4,7 +4,9 @@
   "description": "\"Extracting details from IPL files\"",
   "main": "index.js",
   "scripts": {
-    "build-documentation": "npx jsdoc -d public -r ./functions/"
+    "build-documentation": "npx jsdoc -d public -r ./functions/",
+    "start": "node ./src/server/index.js",
+    "run": "http-server '/home/aswin/Desktop/IPL_Drill/public'"
   },
   "repository": {
     "type": "git",

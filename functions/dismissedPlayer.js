@@ -6,7 +6,19 @@
  * @member dataSheet
  */
 
+const path=require('path');
 const dataSheet = require('./extraction');
+
+/**
+ * Finding table top dismissed player 
+ * @function numberOfPlayerDismissed
+ * @param {Array} IPLrecords - Record of all balls in IPL
+ * @property {Object} dismiss - count number of dimission per player
+ * @property {Array} dismissPlayer - organising the dismiss into array 
+ * @property {String} outputPath - path to dump the output 
+ */
+
+
 function numberOfPlayerDismissed(IPLrecords) {
     const dismiss = {};
     const dismissPlayer = [];
@@ -17,7 +29,7 @@ function numberOfPlayerDismissed(IPLrecords) {
     })
 
     IPLrecords.reduce(countDismiss);
-    console.log(dismiss['MS Dhoni']);
+    // console.log(dismiss['MS Dhoni']);
     /**
      * function to count the dismissed per player
      * @function countDismiss 
@@ -45,16 +57,9 @@ function numberOfPlayerDismissed(IPLrecords) {
     const dataChart=dismissPlayer.filter(elem => elem.count == cnt);
     // console.log(dataChart);
 
-    const outputPath='../public/output/dismissedPlayer.json';
+    const outputPath=path.resolve('./src/public/output/dismissedPlayer.json');
     dataSheet.tranferToJSON(JSON.stringify(dataChart),outputPath);
 }
-/**
- * Finding table top dismissed player 
- * @function numberOfPlayerDismissed
- * @param {Array} IPLrecords - Record of all balls in IPL
- * @property {Object} dismiss - count number of dimission per player
- * @property {Array} dismissPlayer - organising the dismiss into array 
- * @property {String} outputPath - path to dump the output 
- */
+
 
 module.exports = numberOfPlayerDismissed;
