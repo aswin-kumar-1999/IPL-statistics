@@ -6,8 +6,20 @@
  * @property {String} path - path of file from which data has to be fetched 
  * @member dataSheet
  */
-
+ const path=require('path');
 const dataSheet=require('./extraction');
+
+/**
+ * Finding the economical bowler for each season
+ * @function top10EconomicBowler
+ * @param {Array} IPLmatches  - Records of matches per season
+ * @param {Array} IPLdeliveries - Records of all the ball per match
+ * @property {Array} bowlersScore - bowler with there score
+ * @property {Array} bowlerOver - number of over bowled per bowler
+ * @property {number} min - Staring match ID of that season
+ * @property {number} max - Ending match ID of that season 
+ */
+
 function top10EconomicBowler(IPLmatches, IPLdeliveries){
     let bowlersScore=[];
     let bowlerOver=[];
@@ -76,21 +88,12 @@ function top10EconomicBowler(IPLmatches, IPLdeliveries){
      for(let i=0;i<10;i++){
          top10Bowler.push(final[i]);
      }
-     const outputPath='../public/output/economicalBowler.json'
+     const outputPath=path.resolve('./src/public/output/economicalBowler.json');
      dataSheet.tranferToJSON(JSON.stringify(top10Bowler),outputPath);
 }
 
 
-/**
- * Finding the economical bowler for each season
- * @function top10EconomicBowler
- * @param {Array} IPLmatches  - Records of matches per season
- * @param {Array} IPLdeliveries - Records of all the ball per match
- * @property {Array} bowlersScore - bowler with there score
- * @property {Array} bowlerOver - number of over bowled per bowler
- * @property {number} min - Staring match ID of that season
- * @property {number} max - Ending match ID of that season 
- */
+
 
 
 module.exports=top10EconomicBowler;

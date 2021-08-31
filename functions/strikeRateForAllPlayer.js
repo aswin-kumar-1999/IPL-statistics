@@ -22,8 +22,7 @@ function matches(IPLdeliveries) {
  * @param {Array} IPLdeliveries - Stores the details of each ball in the IPL 
 * @property {Array} season - have details of staring and ending match ID per season
 * @property {Array} STRIKE_RATE - Organised detail of Starting and ending match ID for further use
-* @property {Object} calStrike - contains details of StrikeRate,player name, number of over player
-     
+* @property {Object} calStrike - contains details of StrikeRate,player name, number of over player 
  */
 function strikeRate(IPLmatches, IPLdeliveries) {
     let min = Infinity;

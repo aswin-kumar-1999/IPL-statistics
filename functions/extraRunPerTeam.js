@@ -4,7 +4,7 @@
  * @member dataSheet
  * @property {String} path - path of file from which data has to be fetched  
  */
-
+ const path=require('path');
 const dataSheet = require('./extraction');
 function extraScorePerTeam(IPLmatches, IPLdeliveries){
     const extraScores = {};
@@ -41,7 +41,7 @@ function extraScorePerTeam(IPLmatches, IPLdeliveries){
             extraScores[records.bowling_team] += +records.extra_runs;
         }
     }
-    const outputPath = '../public/output/extraRunPerTeam.json';
+    const outputPath = path.resolve('./src/public/output/extraRunPerTeam.json');
     dataSheet.tranferToJSON(JSON.stringify(extraScores), outputPath);
 }
 

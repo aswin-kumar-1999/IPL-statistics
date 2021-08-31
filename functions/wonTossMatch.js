@@ -6,9 +6,17 @@
  * @property {String} path - path of file from which data has to be fetched 
  * @member dataSheet
  */
-
+const path = require('path');
 const dataSheet = require('./extraction');
-function numberOfTimesWonTossNMatch(IPLmatches, IPLdeliveries){
+
+/**
+ * Finding player who won both toss and the match
+ * @function numberOfTimesWonTossNMatch
+ * @param {Array} IPLmatches - Contain match details of each season
+ * @property {Object} tossMatchWin - details of team who won both toss and match
+ * @property {String} outputPath - Path to dump the output
+ */
+function numberOfTimesWonTossNMatch(IPLmatches, IPLdeliveries) {
     const tossMatchWin = {};
     IPLmatches.reduce(winingAll);
 
@@ -26,16 +34,10 @@ function numberOfTimesWonTossNMatch(IPLmatches, IPLdeliveries){
         }
         return tossMatchWin;
     }
-    const outputPath = '../public/output/wonTossMatch.json';
+    const outputPath = path.resolve('./src/public/output/wonTossMatch.json');
     dataSheet.tranferToJSON(JSON.stringify(tossMatchWin), outputPath);
 }
 
-/**
- * Finding player who won both toss and the match
- * @function numberOfTimesWonTossNMatch
- * @param {Array} IPLmatches - Contain match details of each season
- * @property {Object} tossMatchWin - details of team who won both toss and match
- * @property {String} outputPath - Path to dump the output
- */
 
-module.exports=numberOfTimesWonTossNMatch;
+
+module.exports = numberOfTimesWonTossNMatch;
