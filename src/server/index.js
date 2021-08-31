@@ -13,7 +13,6 @@ const path=require('path');
 const pathOfDeliveries = path.resolve('./src/data/deliveries.csv');
 const pathOfMatches = path.resolve('./src/data/matches.csv');
 
-
 dataSheet.fetching(pathOfDeliveries, pathOfMatches, IPLrecords);
 
 function IPLrecords(IPLdeliveries, IPLmatches) {

@@ -1,4 +1,5 @@
-const parse = require('csv-generate');
+
+const parse = require('csv-parse');
 const fs = require('fs');
 
 /**
@@ -8,10 +9,10 @@ const fs = require('fs');
  * @param {Array} IPLdeliveries - records of IPL deliveries 
  * @property {Array} IPLrecords - stores all the details of IPL
  */
-function fetching(pathOfDeliveries,pathOfMatches,IPLrecords) {
-   
+function fetching(pathOfDeliveries, pathOfMatches, IPLrecords) {
+
     const IPLdeliveries = [];
-    const IPLmatches=[];
+    const IPLmatches = [];
     fs.createReadStream(pathOfDeliveries).pipe(
         parse({
             delimiter: ',',
@@ -23,6 +24,7 @@ function fetching(pathOfDeliveries,pathOfMatches,IPLrecords) {
             IPLdeliveries.push(record)
         })
         .on('end', function () {
+            
             fs.createReadStream(pathOfMatches).pipe(
                 parse({
                     delimiter: ',',
@@ -34,8 +36,8 @@ function fetching(pathOfDeliveries,pathOfMatches,IPLrecords) {
                     IPLmatches.push(record)
                 })
                 .on('end', function () {
-                    IPLrecords(IPLdeliveries,IPLmatches);
-                })        
+                    IPLrecords(IPLdeliveries, IPLmatches);
+                })
         })
 
 }
@@ -62,4 +64,4 @@ function tranferToJSON(data, path) {
 * @module fetching  
 */
 
-module.exports = { fetching, tranferToJSON};
+module.exports = { fetching, tranferToJSON };
