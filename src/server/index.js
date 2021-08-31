@@ -1,4 +1,4 @@
-const dataSheet = require('/media/aswin/Work Drive/JavaScript/IPL_Drill/functions/extraction.js');
+const dataSheet = require('../../functions/extraction');
 const numberOfMatchesPerYear = require('../../functions/matchesPerYear');
 const numberOfMatchesWonPerTeam = require('../../functions/matchesWonPerTeam');
 const extraScorePerTeam = require('../../functions/extraRunPerTeam');
@@ -12,7 +12,6 @@ const path=require('path');
 
 const pathOfDeliveries = path.resolve('./src/data/deliveries.csv');
 const pathOfMatches = path.resolve('./src/data/matches.csv');
-
 
 dataSheet.fetching(pathOfDeliveries, pathOfMatches, IPLrecords);
 
