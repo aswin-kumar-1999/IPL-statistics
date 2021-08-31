@@ -8,10 +8,12 @@ const playerOfMatchPerSeason = require('../../functions/playerOfMatch');
 const numberOfPlayerDismissed = require('../../functions/dismissedPlayer');
 const bestSuperOverBowler = require('../../functions/superOverBowler');
 const IPLstrikeRate = require('../../functions/strikeRate');
+const path=require('path');
+
+const pathOfDeliveries = path.resolve('../data/deliveries.csv');
+const pathOfMatches = path.resolve('../data/matches.csv');
 
 
-const pathOfDeliveries = '/media/aswin/Work Drive/JavaScript/IPL_Drill/src/data/deliveries.csv';
-const pathOfMatches = '/media/aswin/Work Drive/JavaScript/IPL_Drill/src/data/matches.csv';
 dataSheet.fetching(pathOfDeliveries, pathOfMatches, IPLrecords);
 
 function IPLrecords(IPLdeliveries, IPLmatches) {
@@ -24,7 +26,4 @@ function IPLrecords(IPLdeliveries, IPLmatches) {
     IPLstrikeRate(IPLmatches, IPLdeliveries);
     numberOfPlayerDismissed(IPLdeliveries);
     bestSuperOverBowler(IPLdeliveries);
-
-
-
 }
