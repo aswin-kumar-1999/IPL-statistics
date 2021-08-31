@@ -10,7 +10,6 @@
         .catch(err => {
             console.error(err);
         })
-
 })();
 
 function objectToArray(records){
@@ -45,7 +44,7 @@ function barChart(season,scorePerTeam){
         },
     
         subtitle: {
-            text: 'Source: https://www.kaggle.com/manasgarg/ipl">Kaggle.com</a>'
+            text: 'Source: <a href="https://www.kaggle.com/manasgarg/ipl">Kaggle.com</a>'
         },
     
         yAxis: {

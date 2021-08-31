@@ -1,4 +1,5 @@
-(function chart() {
+  function matchesplayed() {
+      console.log('working');
     let season;
     let matchesPlayer;
     fetch('./output/matchesPerYear.json')
@@ -12,8 +13,7 @@
         .catch(err => {
             console.error(err);
         })
-
-})();
+};
 
 function barChart(season, matchesPlayer) {
     Highcharts.chart('matchesPerYear', {
@@ -73,3 +73,6 @@ function barChart(season, matchesPlayer) {
         }],
     });
 }
+
+// // export default matchesplayed;
+// module.exports=matchesplayed;

@@ -1,31 +1,31 @@
 (function chart() {
-    fetch('./output/extraRunPerTeam.json')
+    fetch('./output/dismissedPlayer.json')
         .then((data) => {
             return data.json();
         }).then((records) => {
-           const extraScorePerTeam=objectToArray(records);
-            barChart(extraScorePerTeam);
+            const data=objectToArray(records);
+            barChart(data);
         })
         .catch(err => {
             console.error(err);
         })
         function objectToArray(records){
-            const team = Object.keys(records);
-            const extraScore = Object.values(records);
-            const graphFormat=[];
-            for(let i=0;i<team.length;i++){
-                graphFormat.push([team[i],extraScore[i]]);
+    
+            const formatData=[];
+            for(let player in records){
+                formatData.push([`${records[player].batsman} vs ${records[player].bowler}`,records[player].count])
             }
-            return graphFormat;
+            return formatData;
         }
         
-        function barChart(extraScorePerTeam){
-            Highcharts.chart('extraRunPerTeam', {
+        
+        function barChart(records){
+            Highcharts.chart('dismissedPlayer', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Extra runs conceded per team in the year 2016'
+                    text: 'Number of times one player has been dismissed by another player'
                 },
                 subtitle: {
                     text: 'Source: <a href="https://www.kaggle.com/manasgarg/ipl">kaggle</a>'
@@ -33,7 +33,7 @@
                 xAxis: {
                     type: 'category',
                     labels: {
-                        rotation: -45,
+                        rotation: -90,
                         style: {
                             fontSize: '13px',
                             fontFamily: 'Verdana, sans-serif'
@@ -43,18 +43,18 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Extra runs'
+                        text: 'Number of time dismissed'
                     }
                 },
                 legend: {
                     enabled: false
                 },
                 tooltip: {
-                    pointFormat: 'Extra score in 2016: <b>{point.y:.1f} runs</b>'
+                    pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
                 },
                 series: [{
-                    name: 'Extra runs',
-                    data: extraScorePerTeam,
+                    name: 'Population',
+                    data: records,
                     dataLabels: {
                         enabled: true,
                         rotation: -90,
@@ -69,36 +69,36 @@
                     }
                 }]
             });
-                
         }
-        
 })();
 
+
+
 function objectToArray(records){
-    const team = Object.keys(records);
-    const extraScore = Object.values(records);
-    const graphFormat=[];
-    for(let i=0;i<team.length;i++){
-        graphFormat.push([team[i],extraScore[i]]);
+    
+    const formatData=[];
+    for(let player in records){
+        formatData.push([`${records[player].batsman} vs ${records[player].bowler}`,records[player].count])
     }
-    return graphFormat;
+    return formatData;
 }
 
-function barChart(extraScorePerTeam){
-    Highcharts.chart('extraRunPerTeam', {
+
+function barChart(records){
+    Highcharts.chart('dismissedPlayer', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Extra runs conceded per team in the year 2016'
+            text: 'Number of times one player has been dismissed by another player'
         },
         subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'Source: <a href="https://www.kaggle.com/manasgarg/ipl">kaggle</a>'
         },
         xAxis: {
             type: 'category',
             labels: {
-                rotation: -45,
+                rotation: -90,
                 style: {
                     fontSize: '13px',
                     fontFamily: 'Verdana, sans-serif'
@@ -108,18 +108,18 @@ function barChart(extraScorePerTeam){
         yAxis: {
             min: 0,
             title: {
-                text: 'Extra runs'
+                text: 'Number of time dismissed'
             }
         },
         legend: {
             enabled: false
         },
         tooltip: {
-            pointFormat: 'Extra score in 2016: <b>{point.y:.1f} runs</b>'
+            pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
         },
         series: [{
-            name: 'Extra runs',
-            data: extraScorePerTeam,
+            name: 'Population',
+            data: records,
             dataLabels: {
                 enabled: true,
                 rotation: -90,
@@ -134,5 +134,4 @@ function barChart(extraScorePerTeam){
             }
         }]
     });
-        
 }
