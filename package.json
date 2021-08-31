@@ -20,7 +20,7 @@
   },
   "homepage": "https://gitlab.com/Aswin10Kumar/aswin_ipl_project#readme",
   "dependencies": {
-    "csv-generate": "^3.4.0",
+    "csv-parse": "^4.16.2",
     "http-server": "^13.0.1"
   },
   "devDependencies": {
