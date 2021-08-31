@@ -9,11 +9,11 @@ const fs = require('fs');
  * @param {Array} IPLdeliveries - records of IPL deliveries 
  * @property {Array} IPLrecords - stores all the details of IPL
  */
-function fetching(path,callback,IPLdeliveries){
-    
-    const IPLrecords = [];
-
-    fs.createReadStream(__dirname + path).pipe(
+function fetching(pathOfDeliveries,pathOfMatches,IPLrecords) {
+   
+    const IPLdeliveries = [];
+    const IPLmatches=[];
+    fs.createReadStream(pathOfDeliveries).pipe(
         parse({
             delimiter: ',',
             columns: true,
@@ -21,16 +21,24 @@ function fetching(path,callback,IPLdeliveries){
         })
     )
         .on('data', function (record) {
-            IPLrecords.push(record)
+            IPLdeliveries.push(record)
         })
         .on('end', function () {
-           /**
-            * call the respective operation to be performed
-            * @function callback 
-            */
-            callback(IPLrecords,IPLdeliveries);
+            fs.createReadStream(pathOfMatches).pipe(
+                parse({
+                    delimiter: ',',
+                    columns: true,
+                    trim: true
+                })
+            )
+                .on('data', function (record) {
+                    IPLmatches.push(record)
+                })
+                .on('end', function () {
+                    IPLrecords(IPLdeliveries,IPLmatches);
+                })        
         })
-    
+
 }
 
 /**
@@ -38,7 +46,7 @@ function fetching(path,callback,IPLdeliveries){
  * @param {String} data Output data to be printed in json 
  * @param {String} path Path to dump the JSON files
  */
-function tranferToJSON(data,path) {
+function tranferToJSON(data, path) {
     fs.writeFile(path, data, err => {
         if (err) throw err;
     })
@@ -46,13 +54,13 @@ function tranferToJSON(data,path) {
 
 
 
- /**
-  * convert data into json format and dump it
-  * @module tranferToJSON 
-  */
- /**
-  * fetch the data and convert it into array object
- * @module fetching  
+/**
+ * convert data into json format and dump it
+ * @module tranferToJSON 
  */
- 
-module.exports={fetching,tranferToJSON};
+/**
+ * fetch the data and convert it into array object
+* @module fetching  
+*/
+
+module.exports = { fetching, tranferToJSON};

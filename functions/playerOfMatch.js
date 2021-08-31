@@ -5,20 +5,7 @@
  * @member dataSheet 
  */
 const dataSheet = require('./extraction');
-
-const path = '/../src/data/matches.csv';
-dataSheet.fetching(path, playerOfMatch);
-
-/**
- * Find highest number of time title won for  "player of the matches"
- * @function playerOfMatch
- * @param {Array} IPLmatch - IPL records of all the matches
- * @property {Array} manOfMatch - Top list of player who won man of the match
- * @property {String} outputPath - Path to dump the Output files
- * @property {Object} MAN_OF_THE_MATCH - number of time player who won the man of the match
-*/
-
-function playerOfMatch(IPLmatch) {
+function playerOfMatchPerSeason(IPLmatch){
     const MAN_OF_THE_MATCH = {};
     const manOfMatch = {};
     IPLmatch.forEach(season);
@@ -42,7 +29,7 @@ function playerOfMatch(IPLmatch) {
         MAN_OF_THE_MATCH[match.season][match.player_of_match] += 1
         return MAN_OF_THE_MATCH;
     }
-//    console.log(MAN_OF_THE_MATCH);
+
     for (let season in MAN_OF_THE_MATCH) {
         for(let player in MAN_OF_THE_MATCH[season])
         manOfMatch[season].push({name: player , count: MAN_OF_THE_MATCH[season][player]});    
@@ -51,10 +38,21 @@ function playerOfMatch(IPLmatch) {
     for(let season in manOfMatch){
         manOfMatch[season].sort((a,b)=> b.count - a.count)
         const manofSeason= manOfMatch[season].shift();
-         manOfMatchPerSeason.push({season:season,manOfMatch:manofSeason.name})
+         manOfMatchPerSeason.push({season:+season,manOfMatch:manofSeason.name})
     }
    
-     console.log(manOfMatchPerSeason);
-    const outputPath='../src/public/output/playerOfMatch.json';
+    const outputPath='../public/output/playerOfMatch.json';
     dataSheet.tranferToJSON(JSON.stringify(manOfMatchPerSeason),outputPath);
 }
+
+/**
+ * Find highest number of time title won for  "player of the matches"
+ * @function playerOfMatchPerSeason
+ * @param {Array} IPLmatch - IPL records of all the matches
+ * @property {Array} manOfMatch - Top list of player who won man of the match
+ * @property {String} outputPath - Path to dump the Output files
+ * @property {Object} MAN_OF_THE_MATCH - number of time player who won the man of the match
+*/
+
+
+module.exports=playerOfMatchPerSeason;

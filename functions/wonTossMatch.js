@@ -8,18 +8,7 @@
  */
 
 const dataSheet = require('./extraction');
-
-const path = '/../src/data/matches.csv';
-dataSheet.fetching(path, wonTossMatch);
-
-/**
- * Finding player who won both toss and the match
- * @function wonTossMatch
- * @param {Array} IPLmatches - Contain match details of each season
- * @property {Object} tossMatchWin - details of team who won both toss and match
- * @property {String} outputPath - Path to dump the output
- */
-function wonTossMatch(IPLmatches) {
+function numberOfTimesWonTossNMatch(IPLmatches, IPLdeliveries){
     const tossMatchWin = {};
     IPLmatches.reduce(winingAll);
 
@@ -37,8 +26,16 @@ function wonTossMatch(IPLmatches) {
         }
         return tossMatchWin;
     }
-
-    //console.log(tossMatchWin);
-    const outputPath = '../src/public/output/wonTossMatch.json';
+    const outputPath = '../public/output/wonTossMatch.json';
     dataSheet.tranferToJSON(JSON.stringify(tossMatchWin), outputPath);
 }
+
+/**
+ * Finding player who won both toss and the match
+ * @function numberOfTimesWonTossNMatch
+ * @param {Array} IPLmatches - Contain match details of each season
+ * @property {Object} tossMatchWin - details of team who won both toss and match
+ * @property {String} outputPath - Path to dump the output
+ */
+
+module.exports=numberOfTimesWonTossNMatch;

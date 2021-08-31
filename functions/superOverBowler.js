@@ -7,27 +7,25 @@
  */
 
 const dataSheet = require('./extraction');
-
-const path = '/../src/data/deliveries.csv';
-dataSheet.fetching(path, superOver);
-
+function bestSuperOverBowler(IPLrecords){
+    const bowler = IPLrecords.reduce(bowledSuperOver, {});
+    const SUPER_OVER=objectToArray(bowler);
+    SUPER_OVER.sort((a,b)=>{return a.runs- b.runs});
+    const cnt = SUPER_OVER.reduce(function (a, b) { return Math.min(a, b.runs); }, Infinity);
+    const dataChart=SUPER_OVER.filter(elem => elem.runs == cnt);
+    const outputPath='../public/output/superOverBowler.json';
+    dataSheet.tranferToJSON(JSON.stringify(dataChart),outputPath);
+    
+}
 /**
  * Finding of economic bowler in super over
- * @function superOver
+ * @function bestSuperOverBowler
  * @param {Array} IPLrecords - Details of each balls in IPL
  * @property {Object} bowler - bowler bowled in super over
  * @property {Array} SUPER_OVER - bowler bowled in super over in form of array object
  * @property {String} outputPath - Path to dump output
  */
 
-function superOver(IPLrecords) {
-    const bowler = IPLrecords.reduce(bowledSuperOver, {});
-    const SUPER_OVER=objectToArray(bowler);
-    SUPER_OVER.sort((a,b)=>{return b.runs- a.runs});
-    
-    const outputPath='../src/public/output/superOverBowler.json';
-    dataSheet.tranferToJSON(JSON.stringify(SUPER_OVER.shift()),outputPath);
-}
 
 /**
  * Find the bowler who bowled the super over
@@ -57,3 +55,5 @@ function objectToArray(bowler){
     }
     return array;
 }
+
+module.exports=bestSuperOverBowler;

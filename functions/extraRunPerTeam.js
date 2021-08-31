@@ -4,27 +4,9 @@
  * @member dataSheet
  * @property {String} path - path of file from which data has to be fetched  
  */
+
 const dataSheet = require('./extraction');
-
-const path = '/../src/data/deliveries.csv';
-dataSheet.fetching(path, matches);
-
-function matches(IPLdeliveries) {
-    const path = '/../src/data/matches.csv'
-    dataSheet.fetching(path, extraRunPerTeam, IPLdeliveries);
-}
-
-/**
- * Extra run given by the bowler in each team
- * @function extraRunPerTeam
- * @param {Array} IPLmatches - Details of all matches happened in the season
- * @param {Array} IPLdeliveries - Details of all the ball happened in every season
- * @property {object} extraScores - count scores given per team in that season
- * @property {number}  min - Starting match ID of that season
- * @property {number}  max - Ending match ID of that season
- */
-function extraRunPerTeam(IPLmatches, IPLdeliveries) {
-
+function extraScorePerTeam(IPLmatches, IPLdeliveries){
     const extraScores = {};
     let min = Infinity;
     let max = -Infinity;
@@ -59,7 +41,18 @@ function extraRunPerTeam(IPLmatches, IPLdeliveries) {
             extraScores[records.bowling_team] += +records.extra_runs;
         }
     }
-    const outputPath = '../src/public/output/extraRunPerTeam.json';
+    const outputPath = '../public/output/extraRunPerTeam.json';
     dataSheet.tranferToJSON(JSON.stringify(extraScores), outputPath);
 }
 
+/**
+ * Extra run given by the bowler in each team
+ * @function extraRunPerTeam
+ * @param {Array} IPLmatches - Details of all matches happened in the season
+ * @param {Array} IPLdeliveries - Details of all the ball happened in every season
+ * @property {object} extraScores - count scores given per team in that season
+ * @property {number}  min - Starting match ID of that season
+ * @property {number}  max - Ending match ID of that season
+ */
+
+module.exports=extraScorePerTeam;
