@@ -12,6 +12,7 @@ function bestSuperOverBowler(IPLrecords) {
     const bowler = IPLrecords.reduce(bowledSuperOver, {});
     const SUPER_OVER = objectToArray(bowler);
     SUPER_OVER.sort((a, b) => { return a.runs - b.runs });
+    // console.log(SUPER_OVER);
     const cnt = SUPER_OVER.reduce(function (a, b) { return Math.min(a, b.runs); }, Infinity);
     const dataChart = SUPER_OVER.filter(elem => elem.runs == cnt);
     const outputPath = path.resolve('./src/public/output/superOverBowler.json');
@@ -38,7 +39,7 @@ function bestSuperOverBowler(IPLrecords) {
 function bowledSuperOver(bowler, records) {
     if (records.is_super_over != 0) {
         bowler[records.bowler] = bowler[records.bowler] ?? 0;
-        bowler[records.bowler] += +records.is_super_over;
+        bowler[records.bowler] += +records.total_runs;
     }
     return bowler;
 }
