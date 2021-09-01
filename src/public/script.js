@@ -565,7 +565,7 @@
                 enabled: false
             },
             tooltip: {
-                pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+                pointFormat: 'Most Dismissed Player: <b>{point.y:.1f} </b>'
             },
             series: [{
                 name: 'Population',
