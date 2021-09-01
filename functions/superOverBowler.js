@@ -15,7 +15,7 @@ function bestSuperOverBowler(IPLrecords) {
     // console.log(SUPER_OVER);
     const cnt = SUPER_OVER.reduce(function (a, b) { return Math.min(a, b.runs); }, Infinity);
     const dataChart = SUPER_OVER.filter(elem => elem.runs == cnt);
-    const outputPath = path.resolve('./src/public/output/superOverBowler.json');
+    const outputPath = path.join(__dirname,'../src/public/output/superOverBowler.json');
     dataSheet.tranferToJSON(JSON.stringify(dataChart), outputPath);
 
 }

@@ -66,7 +66,7 @@ function IPLstrikeRate(IPLmatches, IPLdeliveries) {
         strikeRatePerSeason.push({ season: elem, strikeRate: +strike.toPrecision(2) });
     }
 
-    const outputPath = path.resolve('./src/public/output/strikeRate.json');
+    const outputPath = path.join(__dirname,'../src/public/output/strikeRate.json');
     dataSheet.tranferToJSON(JSON.stringify(strikeRatePerSeason), outputPath);
 }
 

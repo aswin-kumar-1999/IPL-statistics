@@ -34,7 +34,7 @@ function numberOfTimesWonTossNMatch(IPLmatches, IPLdeliveries) {
         }
         return tossMatchWin;
     }
-    const outputPath = path.resolve('./src/public/output/wonTossMatch.json');
+    const outputPath = path.join(__dirname,'../src/public/output/wonTossMatch.json');
     dataSheet.tranferToJSON(JSON.stringify(tossMatchWin), outputPath);
 }
 

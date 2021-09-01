@@ -10,9 +10,10 @@ const bestSuperOverBowler = require('../../functions/superOverBowler');
 const IPLstrikeRate = require('../../functions/strikeRate');
 const path=require('path');
 
-const pathOfDeliveries = path.resolve('./src/data/deliveries.csv');
-const pathOfMatches = path.resolve('./src/data/matches.csv');
-
+// const pathOfDeliveries = path.resolve('./src/data/deliveries.csv');
+// const pathOfMatches = path.resolve('./src/data/matches.csv');
+const pathOfDeliveries = path.join(__dirname,'../data/deliveries.csv');
+const pathOfMatches = path.join(__dirname,'../data/matches.csv');
 dataSheet.fetching(pathOfDeliveries, pathOfMatches, IPLrecords);
 
 function IPLrecords(IPLdeliveries, IPLmatches) {

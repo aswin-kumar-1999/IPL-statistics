@@ -88,7 +88,7 @@ function top10EconomicBowler(IPLmatches, IPLdeliveries){
      for(let i=0;i<10;i++){
          top10Bowler.push(final[i]);
      }
-     const outputPath=path.resolve('./src/public/output/economicalBowler.json');
+     const outputPath=path.join(__dirname,'../src/public/output/economicalBowler.json');
      dataSheet.tranferToJSON(JSON.stringify(top10Bowler),outputPath);
 }
 

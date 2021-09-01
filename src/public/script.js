@@ -15,6 +15,12 @@
     function barChart(season, matchesPlayer) {
         Highcharts.theme = {
             colors: ['#10ad61'],
+            title: {
+                style: {
+                    color: '#023538',
+                    font: 'bold 20px "Trebuchet MS", Verdana, sans-serif'
+                }
+            }            
         };
         // Apply the theme
         Highcharts.setOptions(Highcharts.theme);

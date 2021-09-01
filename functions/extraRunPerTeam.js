@@ -41,7 +41,7 @@ function extraScorePerTeam(IPLmatches, IPLdeliveries){
             extraScores[records.bowling_team] += +records.extra_runs;
         }
     }
-    const outputPath = path.resolve('./src/public/output/extraRunPerTeam.json');
+    const outputPath = path.join(__dirname,'../src/public/output/extraRunPerTeam.json');
     dataSheet.tranferToJSON(JSON.stringify(extraScores), outputPath);
 }
 
