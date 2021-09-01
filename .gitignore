@@ -141,3 +141,7 @@ public/scripts/prettify/prettify.js
 public/styles/jsdoc-default.css
 public/styles/prettify-jsdoc.css
 public/styles/prettify-tomorrow.css
+
+# strikeRateOfAllPlayer
+functions/strikeRateAllPlayer.js
+
