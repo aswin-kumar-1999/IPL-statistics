@@ -39,23 +39,27 @@ function numberOfPlayerDismissed(IPLrecords) {
      */
     function countDismiss(tot, records) {
         if (records.player_dismissed != '') {
-            dismiss[records.player_dismissed][records.bowler] = dismiss[records.player_dismissed][records.bowler] ?? 0;
-            dismiss[records.player_dismissed][records.bowler] += 1;
+            if( records.dismissal_kind != 'run out'){
+                dismiss[records.player_dismissed][records.bowler] = dismiss[records.player_dismissed][records.bowler] ?? 0;
+                dismiss[records.player_dismissed][records.bowler] += 1;
+            }
+                    
         }
         return dismiss;
     }
 
-
+console.log(dismiss['MS Dhoni']);
     for (let element in dismiss) {
         for (let dismissingBowler in dismiss[element]) {
             dismissPlayer.push({ batsman: element, bowler: dismissingBowler, count: dismiss[element][dismissingBowler] });
         }
     }
+    
    
     dismissPlayer.sort((a, b) => { return b.count - a.count });
     const cnt = dismissPlayer.reduce(function (a, b) { return Math.max(a, b.count); }, 0);
     const dataChart=dismissPlayer.filter(elem => elem.count == cnt);
-    // console.log(dataChart);
+    console.log(dataChart);
 
     const outputPath=path.join(__dirname,'../src/public/output/dismissedPlayer.json');
     dataSheet.tranferToJSON(JSON.stringify(dataChart),outputPath);
