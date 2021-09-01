@@ -22,7 +22,7 @@ function numberOfMatchesPerYear(IPLrecords){
         numberOfMatchesPerYear[element.season] = numberOfMatchesPerYear[element.season] ?? 1;
         numberOfMatchesPerYear[element.season] += 1;
     });
-    const outputPath = path.resolve('./src/public/output/matchesPerYear.json');
+    const outputPath = path.join(__dirname,'../src/public/output/matchesPerYear.json');
     dataSheet.tranferToJSON(JSON.stringify(numberOfMatchesPerYear), outputPath);
 }
 

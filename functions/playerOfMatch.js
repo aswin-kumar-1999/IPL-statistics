@@ -51,7 +51,7 @@ function playerOfMatchPerSeason(IPLmatch) {
         manOfMatchPerSeason.push({ season: +season, manOfMatch: manofSeason.name })
     }
 
-    const outputPath = path.resolve('./src/public/output/playerOfMatch.json');
+    const outputPath = path.join(__dirname,'../src/public/output/playerOfMatch.json');
     dataSheet.tranferToJSON(JSON.stringify(manOfMatchPerSeason), outputPath);
 }
 

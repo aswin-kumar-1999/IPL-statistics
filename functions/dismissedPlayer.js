@@ -57,7 +57,7 @@ function numberOfPlayerDismissed(IPLrecords) {
     const dataChart=dismissPlayer.filter(elem => elem.count == cnt);
     // console.log(dataChart);
 
-    const outputPath=path.resolve('./src/public/output/dismissedPlayer.json');
+    const outputPath=path.join(__dirname,'../src/public/output/dismissedPlayer.json');
     dataSheet.tranferToJSON(JSON.stringify(dataChart),outputPath);
 }
 

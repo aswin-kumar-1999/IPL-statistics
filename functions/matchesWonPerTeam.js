@@ -23,7 +23,7 @@ function numberOfMatchesWonPerTeam(record){
         matchWinners[element.season][element.winner]= matchWinners[element.season][element.winner]?? 1;
         matchWinners[element.season][element.winner]+=1;
      });
-     const outputPath=path.resolve('./src/public/output/matchesWonPerTeam.json');
+     const outputPath=path.join(__dirname,'../src/public/output/matchesWonPerTeam.json');
     dataSheet.tranferToJSON(JSON.stringify(matchWinners),outputPath);
 }
 

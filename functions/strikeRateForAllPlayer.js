@@ -95,7 +95,7 @@ function strikeRate(IPLmatches, IPLdeliveries) {
         }
     }
 
-    const outputPath = '../src/public/output/strikeRate.json';
+    const outputPath = path.join(__dirname,'../src/public/output/strikeRate.json');
     dataSheet.tranferToJSON(JSON.stringify(finalStrike), outputPath);
 }
 
