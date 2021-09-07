@@ -1,5 +1,5 @@
-  function matchesplayed() {
-      console.log('working');
+function matchesplayed() {
+    console.log('working');
     let season;
     let matchesPlayer;
     fetch('./output/matchesPerYear.json')

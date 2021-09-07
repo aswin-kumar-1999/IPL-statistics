@@ -20,9 +20,9 @@ function fetchingStrikeRate(matchesPerSeason) {
         .then((data) => {
             return data.json();
         }).then((records) => {
-           const strikeRate=modifyObject(records);
-         //  console.log(strikeRate);
-           barDrill(strikeRate,matchesPerSeason);
+            const strikeRate = modifyObject(records);
+            //  console.log(strikeRate);
+            barDrill(strikeRate, matchesPerSeason);
         })
         .catch(err => {
             console.error(err);
@@ -45,25 +45,25 @@ function modifyObject(records) {
         data[season] = [];
     }
     for (let season in playerPerSeason) {
-        const playerStrikeRate=[];
-        for(let player in playerPerSeason[season]){
-            const avgrun=playerPerSeason[season][player]
-            playerStrikeRate.push([player,+avgrun]);
+        const playerStrikeRate = [];
+        for (let player in playerPerSeason[season]) {
+            const avgrun = playerPerSeason[season][player]
+            playerStrikeRate.push([player, +avgrun]);
         }
         data[season].push(playerStrikeRate);
         // data[season].push(Object.entries(playerPerSeason[season]));
 
     }
 
-    const final=[];
-    for(let season in data){
-        for(let player in data[season]){
+    const final = [];
+    for (let season in data) {
+        for (let player in data[season]) {
             // console.log(data[season]);
-            final.push({name:season,id:season,data:data[season]})
-        }   
+            final.push({ name: season, id: season, data: data[season] })
+        }
     }
-     console.log(final);
-     return final;
+    console.log(final);
+    return final;
 }
 
 
@@ -75,7 +75,7 @@ function objectToArray(records) {
     console.log(data);
     return data;
 }
-function barDrill(strikeRate,matchesPerSeason) {
+function barDrill(strikeRate, matchesPerSeason) {
     Highcharts.chart('strikeRate', {
         chart: {
             type: 'column'
@@ -122,7 +122,8 @@ function barDrill(strikeRate,matchesPerSeason) {
             {
                 name: "Strike Rate",
                 colorByPoint: true,
-                data: matchesPerSeason,}],
+                data: matchesPerSeason,
+            }],
         drilldown: {
             series: strikeRate
         }
