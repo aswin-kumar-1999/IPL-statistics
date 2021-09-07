@@ -6,13 +6,13 @@ const fs = require('fs');
  * Fetching data from other files 
  * @function fetching 
  * @param {String} path  - path of the file to extract data
- * @param {Array} IPLdeliveries - records of IPL deliveries 
- * @property {Array} IPLrecords - stores all the details of IPL
+ * @param {Array} iplDeliveries - records of IPL deliveries 
+ * @property {Array} iplRecords - stores all the details of IPL
  */
-function fetching(pathOfDeliveries, pathOfMatches, IPLrecords) {
+function fetching(pathOfDeliveries, pathOfMatches, iplRecords) {
 
-    const IPLdeliveries = [];
-    const IPLmatches = [];
+    const iplDeliveries = [];
+    const iplMatches = [];
     fs.createReadStream(pathOfDeliveries).pipe(
         parse({
             delimiter: ',',
@@ -21,10 +21,10 @@ function fetching(pathOfDeliveries, pathOfMatches, IPLrecords) {
         })
     )
         .on('data', function (record) {
-            IPLdeliveries.push(record)
+            iplDeliveries.push(record)
         })
         .on('end', function () {
-            
+
             fs.createReadStream(pathOfMatches).pipe(
                 parse({
                     delimiter: ',',
@@ -33,10 +33,10 @@ function fetching(pathOfDeliveries, pathOfMatches, IPLrecords) {
                 })
             )
                 .on('data', function (record) {
-                    IPLmatches.push(record)
+                    iplMatches.push(record)
                 })
                 .on('end', function () {
-                    IPLrecords(IPLdeliveries, IPLmatches);
+                    iplRecords(iplDeliveries, iplMatches);
                 })
         })
 

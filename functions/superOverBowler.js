@@ -8,26 +8,30 @@
 
 const dataSheet = require('./extraction');
 const path = require('path');
-function bestSuperOverBowler(IPLrecords) {
-    const bowler = IPLrecords.reduce(bowledSuperOver, {});
-    const SUPER_OVER = objectToArray(bowler);
-    SUPER_OVER.sort((a, b) => { return a.runs - b.runs });
-    // console.log(SUPER_OVER);
-    const cnt = SUPER_OVER.reduce(function (a, b) { return Math.min(a, b.runs); }, Infinity);
-    const dataChart = SUPER_OVER.filter(elem => elem.runs == cnt);
-    const outputPath = path.join(__dirname,'../src/public/output/superOverBowler.json');
-    dataSheet.tranferToJSON(JSON.stringify(dataChart), outputPath);
 
-}
 /**
  * Finding of economic bowler in super over
  * @function bestSuperOverBowler
- * @param {Array} IPLrecords - Details of each balls in IPL
+ * @param {Array} iplRecords - Details of each balls in IPL
  * @property {Object} bowler - bowler bowled in super over
  * @property {Array} SUPER_OVER - bowler bowled in super over in form of array object
  * @property {String} outputPath - Path to dump output
  */
 
+function bestSuperOverBowler(iplRecords) {
+
+    const bowler = iplRecords.reduce(bowledSuperOver, {});
+
+    const SUPER_OVER = objectToArray(bowler);
+
+    SUPER_OVER.sort((a, b) => { return a.runs - b.runs });
+
+    const cnt = SUPER_OVER.reduce(function (a, b) { return Math.min(a, b.runs); }, Infinity);
+    const dataChart = SUPER_OVER.filter(elem => elem.runs == cnt);
+    
+    const outputPath = path.join(__dirname, '../src/public/output/superOverBowler.json');
+    dataSheet.tranferToJSON(JSON.stringify(dataChart), outputPath);
+}
 
 /**
  * Find the bowler who bowled the super over
@@ -50,6 +54,7 @@ function bowledSuperOver(bowler, records) {
  * @param {Object} bowler - bowler who bowled super over
  * @returns {Array} - bowler who bowled super over and the runs they gave
  */
+
 function objectToArray(bowler) {
     const array = [];
     for (let ele in bowler) {

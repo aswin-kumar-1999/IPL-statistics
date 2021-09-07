@@ -4,8 +4,8 @@
  * @property {String} path - path of file from which data has to be fetched  
  * @member dataSheet - Contains fetching and transferToJSON functions
  */
-const path=require('path');
-const dataSheet=require('./extraction');
+const path = require('path');
+const dataSheet = require('./extraction');
 
 /**
  * find the number matches won per team per year
@@ -14,17 +14,21 @@ const dataSheet=require('./extraction');
  * @property {Object} matchWinners - Details of season and number of matches played per season  
 */
 
-function numberOfMatchesWonPerTeam(record){
-    const matchWinners={};
+function numberOfMatchesWonPerTeam(record) {
+
+    const matchWinners = {};
+    
     record.forEach(element => {
-       matchWinners[element.season]={}; 
-    });   
+        matchWinners[element.season] = {};
+    });
+
     record.forEach(element => {
-        matchWinners[element.season][element.winner]= matchWinners[element.season][element.winner]?? 1;
-        matchWinners[element.season][element.winner]+=1;
-     });
-     const outputPath=path.join(__dirname,'../src/public/output/matchesWonPerTeam.json');
-    dataSheet.tranferToJSON(JSON.stringify(matchWinners),outputPath);
+        matchWinners[element.season][element.winner] = matchWinners[element.season][element.winner] ?? 1;
+        matchWinners[element.season][element.winner] += 1;
+    });
+
+    const outputPath = path.join(__dirname, '../src/public/output/matchesWonPerTeam.json');
+    dataSheet.tranferToJSON(JSON.stringify(matchWinners), outputPath);
 }
 
 
@@ -33,4 +37,4 @@ function numberOfMatchesWonPerTeam(record){
 
 
 
-module.exports=numberOfMatchesWonPerTeam;
+module.exports = numberOfMatchesWonPerTeam;

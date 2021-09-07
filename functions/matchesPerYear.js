@@ -4,29 +4,29 @@
  * @property {String} path - path of file from which data has to be fetched  
  * @member dataSheet
  */
-const path=require('path');
+const path = require('path');
 const dataSheet = require('./extraction');
 
 /**
  * find the matches played per year
  * @function matchesPerYear 
- * @param {Array} IPLrecords - All matches details of the IPL
+ * @param {Array} iplRecords - All matches details of the IPL
  * @property {Object} numberOfMatchesPerYear - Details of year and number of matches played
  * @property {String} outputPath - Path to dump the output 
 */
 
 
-function numberOfMatchesPerYear(IPLrecords){
+function numberOfMatchesPerYear(iplRecords) {
     const numberOfMatchesPerYear = {};
-    IPLrecords.forEach(element => {
+    iplRecords.forEach(element => {
         numberOfMatchesPerYear[element.season] = numberOfMatchesPerYear[element.season] ?? 1;
         numberOfMatchesPerYear[element.season] += 1;
     });
-    const outputPath = path.join(__dirname,'../src/public/output/matchesPerYear.json');
+    const outputPath = path.join(__dirname, '../src/public/output/matchesPerYear.json');
     dataSheet.tranferToJSON(JSON.stringify(numberOfMatchesPerYear), outputPath);
 }
 
 
 
 
-module.exports=numberOfMatchesPerYear;
+module.exports = numberOfMatchesPerYear;
