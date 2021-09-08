@@ -19,6 +19,7 @@ const dataSheet = require('./extraction');
  */
 
 function extraScorePerTeam(iplMatches, iplDeliveries) {
+    
     const extraScores = {};
     let min = Infinity;
     let max = -Infinity;
@@ -43,6 +44,7 @@ function extraScorePerTeam(iplMatches, iplDeliveries) {
             }
         }
     }
+
     /**
      * Function used to find out extra run given by each player
      * @function extraRuns
@@ -54,6 +56,7 @@ function extraScorePerTeam(iplMatches, iplDeliveries) {
             extraScores[records.bowling_team] += +records.extra_runs;
         }
     }
+
     const outputPath = path.join(__dirname, '../src/public/output/extraRunPerTeam.json');
     dataSheet.tranferToJSON(JSON.stringify(extraScores), outputPath);
 }

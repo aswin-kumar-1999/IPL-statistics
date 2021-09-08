@@ -17,11 +17,14 @@ const dataSheet = require('./extraction');
 
 
 function numberOfMatchesPerYear(iplRecords) {
+
     const numberOfMatchesPerYear = {};
+  
     iplRecords.forEach(element => {
         numberOfMatchesPerYear[element.season] = numberOfMatchesPerYear[element.season] ?? 1;
         numberOfMatchesPerYear[element.season] += 1;
     });
+
     const outputPath = path.join(__dirname, '../src/public/output/matchesPerYear.json');
     dataSheet.tranferToJSON(JSON.stringify(numberOfMatchesPerYear), outputPath);
 }

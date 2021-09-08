@@ -7,23 +7,32 @@ const numberOfTimesWonTossNMatch = require('../../functions/wonTossMatch');
 const playerOfMatchPerSeason = require('../../functions/playerOfMatch');
 const numberOfPlayerDismissed = require('../../functions/dismissedPlayer');
 const bestSuperOverBowler = require('../../functions/superOverBowler');
-const IPLstrikeRate = require('../../functions/strikeRate');
+const iplStrikeRate = require('../../functions/strikeRate');
+
 const path=require('path');
 
-// const pathOfDeliveries = path.resolve('./src/data/deliveries.csv');
-// const pathOfMatches = path.resolve('./src/data/matches.csv');
 const pathOfDeliveries = path.join(__dirname,'../data/deliveries.csv');
 const pathOfMatches = path.join(__dirname,'../data/matches.csv');
-dataSheet.fetching(pathOfDeliveries, pathOfMatches, IPLrecords);
+dataSheet.fetching(pathOfDeliveries, pathOfMatches, iplRecords);
 
-function IPLrecords(IPLdeliveries, IPLmatches) {
-    numberOfMatchesPerYear(IPLmatches);
-    numberOfMatchesWonPerTeam(IPLmatches);
-    extraScorePerTeam(IPLmatches, IPLdeliveries);
-    top10EconomicBowler(IPLmatches, IPLdeliveries);
-    numberOfTimesWonTossNMatch(IPLmatches, IPLdeliveries);
-    playerOfMatchPerSeason(IPLmatches);
-    IPLstrikeRate(IPLmatches, IPLdeliveries);
-    numberOfPlayerDismissed(IPLdeliveries);
-    bestSuperOverBowler(IPLdeliveries);
+function iplRecords(err,iplDeliveries, iplMatches) {
+    if(err != null){
+        console.log("ERROR",err);
+    }
+    else{
+        try{
+            numberOfMatchesPerYear(iplMatches);
+            numberOfMatchesWonPerTeam(iplMatches);
+            extraScorePerTeam(iplMatches, iplDeliveries);
+            top10EconomicBowler(iplMatches, iplDeliveries);
+            numberOfTimesWonTossNMatch(iplMatches, iplDeliveries);
+            playerOfMatchPerSeason(iplMatches);
+            iplStrikeRate(iplMatches, iplDeliveries);
+            numberOfPlayerDismissed(iplDeliveries);
+            bestSuperOverBowler(iplDeliveries);
+        }
+       catch(error){
+           console.error("ERROR:",error.message)
+       }
+    }  
 }
