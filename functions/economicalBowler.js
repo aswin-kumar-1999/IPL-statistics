@@ -21,7 +21,7 @@ const dataSheet = require('./extraction');
  */
 
 function top10EconomicBowler(iplMatches, iplDeliveries) {
-    
+
     let bowlersScore = [];
     let bowlerOver = [];
     let min = Infinity;
@@ -56,25 +56,32 @@ function top10EconomicBowler(iplMatches, iplDeliveries) {
     function ecoBowler(record) {
         if (record.match_id >= min && record.match_id <= max) {
             if (bowlersScore[record.bowler] == undefined) {
-                bowlersScore[record.bowler] = 0;
-                bowlerOver[record.bowler] = { over: 0, pre: 0 };
+                bowlersScore[record.bowler] = { runs: 0, balls: 0 };
+
+                // bowlerOver[record.bowler] = { over: 0, pre: 0 };
+                // bowlerOver[record.bowler] = { ball:0};
             }
-            bowlersScore[record.bowler] += (+record.total_runs);
-            if (bowlerOver[record.bowler].pre != record.over) {
-                bowlerOver[record.bowler].over += 1;
-                bowlerOver[record.bowler].pre = +record.over;
-            }
+            bowlersScore[record.bowler].runs += (+record.total_runs);
+            bowlersScore[record.bowler].balls += 1;
+
+            // bowlerOver[record.bowler].ball += +1;
+            // if (bowlerOver[record.bowler].pre != record.over) {
+            //     bowlerOver[record.bowler].over += 1;
+            //     bowlerOver[record.bowler].pre = +record.over;
+            // }
         }
     }
-
     let final = [];
     for (let item in bowlersScore) {
-        const avgScore = bowlersScore[item] / bowlerOver[item].over;
-        final.push({ bowler: item, avgRun: avgScore, over: bowlerOver[item].over });
+        // const avgScore = bowlersScore[item] / bowlerOver[item].over;
+        const over = bowlersScore[item].balls / 6 + (bowlersScore[item].balls % 6) / 10;
+        const avgScore = bowlersScore[item].runs / over;
+        final.push({ bowler: item, avgRun: +avgScore.toFixed(2) });
     }
 
     final.sort((a, b) => { return a.avgRun - b.avgRun });
     const top10Bowler = [];
+
     for (let i = 0; i < 10; i++) {
         top10Bowler.push(final[i]);
     }

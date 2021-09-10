@@ -6,6 +6,7 @@
  * @property {String} path - path of file from which data has to be fetched 
  * @member dataSheet
  */
+
 const path = require('path');
 const dataSheet = require('./extraction');
 
@@ -16,7 +17,9 @@ const dataSheet = require('./extraction');
  * @property {Object} tossMatchWin - details of team who won both toss and match
  * @property {String} outputPath - Path to dump the output
  */
+
 function numberOfTimesWonTossNMatch(iplMatches) {
+    
     const tossMatchWin = {};
     iplMatches.reduce(winingAll);
 

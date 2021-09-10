@@ -4,8 +4,10 @@
  * @property {String} path - path of file from which data has to be fetched 
  * @member dataSheet 
  */
+
 const dataSheet = require('./extraction');
-const path = require('path')
+const path = require('path');
+
 /**
  * Find highest number of time title won for  "player of the matches"
  * @function playerOfMatchPerSeason

@@ -19,10 +19,9 @@ function numberOfMatchesWonPerTeam(record) {
     const matchWinners = {};
     
     record.forEach(element => {
-        matchWinners[element.season] = {};
-    });
-
-    record.forEach(element => {
+        if(matchWinners[element.season] == undefined){
+            matchWinners[element.season] = {};
+        }
         matchWinners[element.season][element.winner] = matchWinners[element.season][element.winner] ?? 1;
         matchWinners[element.season][element.winner] += 1;
     });

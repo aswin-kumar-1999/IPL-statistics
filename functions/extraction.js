@@ -7,39 +7,60 @@ const fs = require('fs');
  * @function fetching 
  * @param {String} path  - path of the file to extract data
  * @param {Array} iplDeliveries - records of IPL deliveries 
- * @property {Array} iplRecords - stores all the details of IPL
+ * @property {Array} cb - stores all the details of IPL
  */
-function fetching(pathOfDeliveries, pathOfMatches, iplRecords) {
-
-    const iplDeliveries = [];
-    const iplMatches = [];
-    fs.createReadStream(pathOfDeliveries).pipe(
-        parse({
-            delimiter: ',',
-            columns: true,
-            trim: true
-        })
-    )
-        .on('data', function (record) {
-            iplDeliveries.push(record)
-        })
-        .on('end', function () {
-
-            fs.createReadStream(pathOfMatches).pipe(
-                parse({
-                    delimiter: ',',
-                    columns: true,
-                    trim: true
+function fetching(pathOfDeliveries, pathOfMatches, cb) {
+    if (typeof cb != 'function') {
+        console.log('cb is not a function', err.stack);
+    }
+    else if (typeof pathOfDeliveries != 'string' || typeof pathOfMatches != 'string') {
+        cb("Path is not defined");
+    }
+    else {
+        try {
+            const iplDeliveries = [];
+            const iplMatches = [];
+            fs.createReadStream(pathOfDeliveries)
+                .on('error', function (err) {
+                    cb(err.message)
                 })
-            )
+                .pipe(
+                    parse({
+                        delimiter: ',',
+                        columns: true,
+                        trim: true
+                    })
+                )
                 .on('data', function (record) {
-                    iplMatches.push(record)
+                    iplDeliveries.push(record)
                 })
                 .on('end', function () {
-                    iplRecords(iplDeliveries, iplMatches);
-                })
-        })
 
+                    fs.createReadStream(pathOfMatches)
+                        .on('error', function (err) {
+                            cb(err.message)
+                        })
+                        .pipe(
+                            parse({
+                                delimiter: ',',
+                                columns: true,
+                                trim: true
+                            })
+                        )
+                        .on('data', function (record) {
+                            iplMatches.push(record)
+                        })
+
+                        .on('end', function () {
+                            cb(null, iplDeliveries, iplMatches);
+                        })
+                })
+
+        }
+        catch (err) {
+            cb(err);
+        }
+    }
 }
 
 /**
